@@ -34,6 +34,7 @@ export default class ContentLoader extends Component {
             ],
             frequence: props.duration / 2
         }
+        this._isMounted = false;
         this._animate = new Animated.Value(0)
         this.loopAnimation = this
             .loopAnimation
@@ -49,7 +50,11 @@ export default class ContentLoader extends Component {
         return x
     }
     componentDidMount(props) {
+        this._isMounted = true
         this.loopAnimation()
+    }
+    componentWillUnmount() {
+        this._isMounted = false
     }
 
     loopAnimation() {
@@ -73,7 +78,9 @@ export default class ContentLoader extends Component {
             offsetValues[0] = this.offsetValueBound(newState.offsetValues[0]);
             offsetValues[1] = this.offsetValueBound(newState.offsetValues[1]);
             offsetValues[2] = this.offsetValueBound(newState.offsetValues[2]);
-            this.setState({offsets: offsetValues});
+            if (this._isMounted) {
+                this.setState({offsets: offsetValues});
+            }
             if (t < 1) {
                 requestAnimationFrame(this._animation);
             }
