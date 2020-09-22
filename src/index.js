@@ -91,11 +91,13 @@ export default class ContentLoader extends Component {
         Animated.sequence([
             Animated.timing(this._animate, {
                 toValue: 1,
-                duration: this.state.frequence
+                duration: this.state.frequence,
+                useNativeDriver: this.props.useNativeDriver,
             }),
             Animated.timing(this._animate, {
                 toValue: 0,
-                duration: this.state.frequence
+                duration: this.state.frequence,
+                useNativeDriver: this.props.useNativeDriver,
             })
         ]).start((event) => {
             if (event.finished) {
@@ -151,6 +153,7 @@ ContentLoader.propTypes = {
     y1: PropTypes.string,
     x2: PropTypes.string,
     y2: PropTypes.string,
+     useNativeDriver: PropTypes.bool,
 }
 ContentLoader.defaultProps = {
     primaryColor: '#eeeeee',
@@ -161,5 +164,6 @@ ContentLoader.defaultProps = {
     x1: '0',
     y1: '0',
     x2: '100%',
-    y2: '0'
+    y2: '0',
+    useNativeDriver: true,
 }
